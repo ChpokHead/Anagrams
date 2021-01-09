@@ -1,119 +1,120 @@
 package com.chpok.anagrams;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
-public class AnagramMakerTest {
-    
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-    
+class AnagramMakerTest {
+
     private final AnagramMaker anagramMaker = new AnagramMaker();
-
+    
     @Test
-    public void makeAnagramShouldThrowIllegalArgumentExceptionIfSentenceIsNull() {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The string is null");
+    void makeAnagramShouldThrowIllegalArgumentExceptionIfSentenceIsNull() {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> anagramMaker.makeAnagram(null));
+        final String expected = "The string is null";
+        final String actual = exception.getMessage();
        
-        anagramMaker.makeAnagram(null);
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldThrowIllegalArgumentExceptionIfSentenceIsEmpty() {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The string is empty");
-        
-        anagramMaker.makeAnagram("");
+    void makeAnagramShouldThrowIllegalArgumentExceptionIfSentenceIsEmpty() {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> anagramMaker.makeAnagram(""));
+        final String expected = "The string is empty";
+        final String actual = exception.getMessage();
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldThrowIllegalArgumentExceptionIfSentenceContainsOnlyTabulationSyms() {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The string contains only spaces or tabs");
-        
-        anagramMaker.makeAnagram("      ");
+    void makeAnagramShouldThrowIllegalArgumentExceptionIfSentenceContainsOnlyTabulationSyms() {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> anagramMaker.makeAnagram("   "));
+        final String expected = "The string contains only spaces or tabs";
+        final String actual = exception.getMessage();
+       
+        assertThat(actual, is(equalTo(expected)));
     }
 
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithOneNonLetterSym() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithOneNonLetterSym() {
         final String expected = "d1cba";
         final String actual = anagramMaker.makeAnagram("a1bcd");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithOneLetterSym() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithOneLetterSym() {
         final String expected = "123a45";
         final String actual = anagramMaker.makeAnagram("123a45");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithTheSameLetterSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithTheSameLetterSyms() {
         final String expected = "aaaaa";
         final String actual = anagramMaker.makeAnagram("aaaaa");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithTheSameNonLetterSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithTheSameNonLetterSyms() {
         final String expected = "11111";
         final String actual = anagramMaker.makeAnagram("11111");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithDifferentLetterSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithDifferentLetterSyms() {
         final String expected = "edcba";
         final String actual = anagramMaker.makeAnagram("abcde");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithDifferentNonLetterSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithDifferentNonLetterSyms() {
         final String expected = "12345";
         final String actual = anagramMaker.makeAnagram("12345");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithLowAndUpperCasesSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsOneWordWithLowAndUpperCasesSyms() {
         final String expected = "eDcBa";
         final String actual = anagramMaker.makeAnagram("aBcDe");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+   
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsWordsWithOnlyLetterSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsWordsWithOnlyLetterSyms() {
         final String expected = "edcba hgf lkji";
         final String actual = anagramMaker.makeAnagram("abcde fgh ijkl");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsWordsWithOnlyNonLetterSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsWordsWithOnlyNonLetterSyms() {
         final String expected = "123 4567 893";
         final String actual = anagramMaker.makeAnagram("123 4567 893");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
-    
+
     @Test
-    public void makeAnagramShouldReturnReversedSentenceWhenItContainsWordsWithDifferentSyms() {
+    void makeAnagramShouldReturnReversedSentenceWhenItContainsWordsWithDifferentSyms() {
         final String expected = "d1cba hgf!e eg12fa";
         final String actual = anagramMaker.makeAnagram("a1bcd efg!h af12ge");
-        
-        assertEquals(expected, actual);
+       
+        assertThat(actual, is(equalTo(expected)));
     }
 }
