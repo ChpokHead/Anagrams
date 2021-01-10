@@ -36,18 +36,13 @@ public class AnagramMaker {
         int startIndex = 0, endIndex = symbolsArray.length - 1;
         
         while (startIndex < endIndex) {
-            if (!Character.isAlphabetic(symbolsArray[startIndex]) && startIndex != symbolsArray.length-1) {
+            if (!Character.isAlphabetic(symbolsArray[startIndex])) {
                 startIndex++;
                 continue;
             }
-            
-            if (!Character.isAlphabetic(symbolsArray[endIndex]) && endIndex != 0) {
+            if (!Character.isAlphabetic(symbolsArray[endIndex])) {
                 endIndex--;
                 continue;
-            }
-            
-            if(startIndex >= endIndex) {
-                break;
             }
             
             swap(symbolsArray, startIndex, endIndex);
